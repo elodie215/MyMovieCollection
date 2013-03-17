@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MyMovies.Models.Movie>
+
+@{
+    ViewBag.Title = "Recherche";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (Model.ToList().Count > 0)
+{
+    <p>
+        @using (Html.BeginForm("Search", "Movies", FormMethod.Get)) {    
+             <p>Genre: @Html.DropDownList("genre", "Tous")
+                Note: @Html.DropDownList("rating", "Toutes")
+                Titre: @Html.TextBox("query") 
+                <input type="submit" value="chercher" />
+             </p> 
+        }
+    </p>
+    
+    foreach(var item in Model) {
+        <div class="movie-min">
+            <div class="cover-min">
+                <img src="@Url.Action("GetPhotoThumbnail", "Movies", new { path = item.Cover, width = 130, height = 190 })" />
+            </div>
+            <div class="movie-prop-min">
+                <span class="block bold">@Html.DisplayNameFor(model => model.Title):</span> @Html.DisplayFor(modelItem => item.Title)
+            </div>
+            <div class="movie-prop-min">
+                <span class="block bold">@Html.DisplayNameFor(model => model.Genre):</span> @Html.DisplayFor(modelItem => item.Genre.Name)
+            </div>
+            <div class="movie-prop-min">
+                <span class="block bold">@Html.DisplayNameFor(model => model.Rating):</span> @Helpers.DisplayRORating(item.Rating)
+            </div>
+            <div class="movie-propr-min">
+                @Html.ActionLink("Modifier", "Edit", new { id=item.MovieID }) |
+                @Html.ActionLink("Détails", "Details", new { id=item.MovieID }) |
+                @Html.ActionLink("Supprimer", "Delete", new { id=item.MovieID })
+            </div>
+        </div>
+    }
+}
+else 
+{
+    <p>Aucun film dans la collection !</p>
+}

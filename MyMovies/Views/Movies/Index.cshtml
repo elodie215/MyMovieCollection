@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MyMovies.Models.Movie>
+
+@{
+    ViewBag.Title = "Ma Collection de films";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>@ViewBag.Title</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<p>
+    @Html.ActionLink("Ajouter un film", "Create")
+</p>
+@if (Model.ToList().Count > 0)
+{
+    foreach(var item in Model) {
+        <div class="movie-min">
+            <div class="cover-min">
+                <img src="@Url.Action("GetPhotoThumbnail", "Movies", new { path = item.Cover, width = 130, height = 190 })" />
+            </div>
+            <div class="movie-prop-min">
+                <span class="block bold">@Html.DisplayNameFor(model => model.Title):</span> @Html.DisplayFor(modelItem => item.Title)
+            </div>
+            <div class="movie-prop-min">
+                <span class="block bold">@Html.DisplayNameFor(model => model.Genre):</span> @Html.DisplayFor(modelItem => item.Genre.Name)
+            </div>
+            <div class="movie-prop-min">
+                <span class="block bold">@Html.DisplayNameFor(model => model.Rating):</span> @Helpers.DisplayRORating(item.Rating)
+            </div>
+            <div class="movie-propr-min">
+                @Html.ActionLink("Modifier", "Edit", new { id=item.MovieID }) |
+                @Html.ActionLink("Détails", "Details", new { id=item.MovieID }) |
+                @Html.ActionLink("Supprimer", "Delete", new { id=item.MovieID })
+            </div>
+        </div>
+    }
+    
+    <div class="movies-paging">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { LinkToFirstPageFormat = "<< Première page", LinkToPreviousPageFormat = "< Précédente", LinkToNextPageFormat = "Suivante >", LinkToLastPageFormat = "Dernière page >>", MaximumPageNumbersToDisplay = 5 })
+    </div>
+}
+else 
+{
+    <p>Aucun film dans la collection !</p>
+}

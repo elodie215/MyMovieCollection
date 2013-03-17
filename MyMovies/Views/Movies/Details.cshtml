@@ -1,0 +1,38 @@
+﻿@model MyMovies.Models.Movie
+
+@{
+    ViewBag.Title = "Détails";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Movie</legend>
+
+    <div class="movie-details">
+        <div class="cover-details">
+            <img src="@Url.Action("GetPhotoThumbnail", "Movies", new { path = Model.Cover, width = 220, height = 300 })" />
+        </div>
+        <div class="movie-prop-details">
+            <span class="block bold">@Html.DisplayNameFor(model => model.Title):</span> @Html.DisplayFor(model => model.Title)
+        </div>
+        <div class="movie-prop-details">
+            <span class="block bold">@Html.DisplayNameFor(model => model.Genre):</span> @Html.DisplayFor(model => model.Genre.Name)
+        </div>
+        <div class="movie-prop-details">
+            <span class="block bold">@Html.DisplayNameFor(model => model.Rating):</span> @Helpers.DisplayRORating(Model.Rating)
+        </div>
+        <div class="movie-prop-details">
+            <span class="block bold">@Html.DisplayNameFor(model => model.Support):</span> @Html.DisplayFor(model => model.Support.Name)
+        </div>
+    </div>
+</fieldset>
+
+@if (Model.VideoID != null) {
+    @Helpers.DisplayVideo(Model.VideoID);
+}
+
+<p>
+    @Html.ActionLink("Modifier", "Edit", new { id=Model.MovieID }) |
+    @Html.ActionLink("Retour à la collection", "Index")
+</p>

@@ -1,0 +1,36 @@
+﻿@{
+    var menus = new[]
+        {
+            new { LinkText="Accueil", ActionName="Index",ControllerName="Home",Roles="All"  },
+            new { LinkText="Ma collection", ActionName="Index", ControllerName="Movies", Roles="Administrator,Member"  },
+            new { LinkText="Rechercher", ActionName="Search", ControllerName="Movies", Roles="Administrator,Member"  },
+            new { LinkText="À propos", ActionName="About",ControllerName="Home",Roles="All"  },
+            /*new { LinkText="Contact", ActionName="Contact",ControllerName="Home",Roles="All"  },*/
+        };
+}
+
+<ul id="menu">
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    String[] roles = Roles.GetRolesForUser();
+    var links = from item in menus
+                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Any(x => roles.Contains(x) || x == "All")
+                select item;
+    
+    foreach (var link in links)
+    {
+        @: <li> @Html.ActionLink(link.LinkText, link.ActionName,link.ControllerName)</li>
+    }
+}
+else{
+    var links = from item in menus
+                where item.Roles.Split(new String[]{","},StringSplitOptions.RemoveEmptyEntries)
+                .Any(x=>new String[]{"All","Anonymous"}.Contains(x))
+                select item;
+    
+     foreach ( var link in links){
+         @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+     }
+}
+</ul>

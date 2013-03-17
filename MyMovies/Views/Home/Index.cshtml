@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Accueil";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+            <p>
+                MyMovies vous propose de gérer votre collection de films (DVD, Bluray, Divx, etc.) de façon simple
+                et rapide! <mark>Accédez à toute votre vidéothèque à tout moment, par Internet.</mark>
+            </p>
+
+            <p>
+                L'inscription est <mark>gratuite !</mark>
+            </p>
+        </div>
+    </section>
+}
+<h3>Profitez de votre collection de films en quelques étapes :</h3>
+<ol class="round">
+    <li class="one">
+        <h5>S'inscrire</h5>
+        Inscrivez-vous gratuitement ou connectez-vous directement via votre compte Facebook ou Twitter en suivant 
+        les liens du menu supérieur droit ou en cliquant <a href="~/Views/Account/Register" title="Inscription">ici</a>.
+    </li>
+
+    <li class="two">
+        <h5>Ajouter des films à sa collection</h5>
+        En quelques clics, ajoutez un film à votre collection. Sauvegardez les informations telles que le <strong>titre</strong>, 
+        le <strong>genre</strong>, le <strong>format</strong>, 
+        l'<strong>affiche</strong> et donnez-lui une note !
+    </li>
+
+    <li class="three">
+        <h5>Rechercher un titre</h5>
+        Recherchez rapidement un titre dans votre collection en filtrant par <strong>genre</strong>, par <strong>titre</strong> ou par <strong>note</strong> !
+    </li>
+</ol>
